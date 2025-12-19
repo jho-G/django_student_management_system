@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Student</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fa;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 450px;
+            background: white;
+            margin: 100px auto;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0px 3px 12px rgba(0, 0, 0, 0.12);
+            text-align: center;
+        }
+
+        h3 {
+            color: #c0392b;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .btn-delete {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .btn-delete:hover {
+            background: #c0392b;
+        }
+
+        .btn-cancel {
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            background: #bdc3c7;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+
+        .btn-cancel:hover {
+            background: #95a5a6;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h3>Are you sure you want to delete <strong>{{ student.name }}</strong>?</h3>
+
+    <form method="POST" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn-delete">Yes, Delete</button>
+    </form>
+
+    <a href="{% url 'student_list' %}" class="btn-cancel">Cancel</a>
+</div>
+
+</body>
+</html>

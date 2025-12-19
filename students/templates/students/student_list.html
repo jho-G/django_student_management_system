@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Students List</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fa;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Search Bar */
+        .search-box {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px 0 0 6px;
+            outline: none;
+        }
+
+        .search-box button {
+            padding: 10px 15px;
+            border: none;
+            background: #3498db;
+            color: white;
+            border-radius: 0 6px 6px 0;
+            cursor: pointer;
+        }
+
+        .search-box button:hover {
+            background: #2980b9;
+        }
+
+        /* Student List */
+        .student-card {
+            background: #fafafa;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+
+        .student-card strong {
+            font-size: 16px;
+        }
+
+        .actions a {
+            margin-right: 10px;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .actions a:hover {
+            text-decoration: underline;
+        }
+
+        /* Add button */
+        .add-btn {
+            display: inline-block;
+            background: #27ae60;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 6px;
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
+
+        .add-btn:hover {
+            background: #1e874b;
+        }
+
+        /* Pagination */
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .pagination a {
+            margin: 0 5px;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .pagination span {
+            margin: 0 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Students List</h1>
+
+    <!-- Search -->
+    <form method="GET" action="{% url 'student_list' %}" class="search-box">
+        <input type="text" name="q" placeholder="Search students..." value="{{ request.GET.q }}">
+        <button type="submit">Search</button>
+    </form>
+
+    <a href="{% url 'student_create' %}" class="add-btn">+ Add New Student</a>
+
+    <!-- Students -->
+    {% for student in page_obj %}
+        <div class="student-card">
+            <strong>{{ student.name }}</strong> ({{ student.department }})<br>
+
+            <b>Courses:</b>
+            {% for c in student.courses.all %}
+                {{ c.course_name }}{% if not forloop.last %}, {% endif %}
+            {% empty %}
+                None
+            {% endfor %}
+
+            <div class="actions">
+                <a href="{% url 'student_update' student.id %}">Edit</a>
+                <a href="{% url 'student_delete' student.id %}">Delete</a>
+                <a href="{% url 'student_add_course' student.id %}">Add Course</a>
+                <a href="{% url 'student_detail' student.id %}">View</a>
+            </div>
+        </div>
+    {% endfor %}
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+                <a href="?q={{request.GET.q}}&page={{page_obj.previous_page_number}}">Previous</a>
+            {% endif %}
+
+            <span>Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}</span>
+
+            {% if page_obj.has_next %}
+                <a href="?q={{request.GET.q}}&page={{page_obj.next_page_number}}">Next</a>
+            {% endif %}
+        </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>

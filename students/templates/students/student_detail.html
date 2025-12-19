@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Details</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+        }
+
+        .student-container {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .student-container:hover {
+            transform: translateY(-5px);
+        }
+
+        h1 {
+            background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+            color: white;
+            padding: 25px 30px;
+            font-size: 28px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            margin: 0;
+        }
+
+        h1:before {
+            content: "👨‍🎓";
+            margin-right: 15px;
+            font-size: 32px;
+        }
+
+        .details-content {
+            padding: 30px;
+        }
+
+        .detail-item {
+            display: flex;
+            margin-bottom: 22px;
+            padding-bottom: 22px;
+            border-bottom: 1px solid #f0f0f0;
+            align-items: center;
+        }
+
+        .detail-item:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        strong {
+            min-width: 140px;
+            font-weight: 600;
+            color: #4b6cb7;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+        }
+
+        strong:after {
+            content: ":";
+            margin-left: auto;
+            margin-right: 20px;
+            color: #aaa;
+        }
+
+        p {
+            font-size: 18px;
+            color: #444;
+            line-height: 1.5;
+            flex: 1;
+            margin: 0;
+        }
+
+        .courses-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .course-tag {
+            background-color: #e8efff;
+            color: #4b6cb7;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 500;
+            display: inline-block;
+            transition: all 0.2s ease;
+            border: 1px solid #d0ddff;
+        }
+
+        .course-tag:hover {
+            background-color: #4b6cb7;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(75, 108, 183, 0.2);
+            cursor: pointer;
+        }
+
+        .grade-display {
+            display: inline-block;
+            background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 20px;
+            margin-top: 5px;
+            box-shadow: 0 4px 10px rgba(75, 108, 183, 0.2);
+            transition: transform 0.2s ease;
+        }
+
+        .grade-display:hover {
+            transform: scale(1.05);
+        }
+
+        .no-courses {
+            font-style: italic;
+            color: #888;
+            background-color: #f9f9f9;
+            padding: 8px 15px;
+            border-radius: 8px;
+            border: 1px dashed #ddd;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .detail-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            strong {
+                min-width: 100%;
+                margin-bottom: 8px;
+            }
+            
+            strong:after {
+                display: none;
+            }
+            
+            h1 {
+                font-size: 24px;
+                padding: 20px;
+            }
+            
+            .details-content {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .courses-list {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .course-tag {
+                width: 100%;
+                text-align: center;
+            }
+            
+            body {
+                padding: 10px;
+            }
+        }
+
+        /* Animation for page load */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .student-container {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="student-container">
+        <h1>Student Details</h1>
+        <div class="details-content">
+            <div class="detail-item">
+                <strong>Name</strong>
+                <p>{{student.name}}</p>
+            </div>
+            
+            <div class="detail-item">
+                <strong>Age</strong>
+                <p>{{student.age}}</p>
+            </div>
+            
+            <div class="detail-item">
+                <strong>Email</strong>
+                <p>{{student.email}}</p>
+            </div>
+            
+            <div class="detail-item">
+                <strong>Department</strong>
+                <p>{{student.department}}</p>
+            </div>
+            
+            <div class="detail-item">
+                <strong>Courses</strong>
+                <div>
+                    {% if student.courses.all %}
+                        <div class="courses-list">
+                            {% for course in student.courses.all %}
+                                <span class="course-tag">{{ course.course_name }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <span class="no-courses">None</span>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="detail-item">
+                <strong>Grade</strong>
+                <p><span class="grade-display">{{student.grade}}</span></p>
+            </div>
+        </div>
+    </div>
+
+    
+</body>
+</html>

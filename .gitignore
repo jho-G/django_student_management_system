@@ -1,0 +1,20 @@
+# Python cache files
+*.pyc
+__pycache__/
+
+# Environment variables
+.env
+venv/
+*.egg-info
+
+# Django database
+db.sqlite3
+
+# Django static and media
+/staticfiles
+/media
+
+# IDE and system files
+.idea/
+.vscode/
+.DS_Store

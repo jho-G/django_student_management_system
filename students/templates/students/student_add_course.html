@@ -1,0 +1,11 @@
+<form method="post">
+    {% csrf_token %}
+
+    {% for checkbox in form.courses %}
+        <div>
+            {{ checkbox }}
+        </div>
+    {% endfor %}
+
+    <button type="submit">Save Courses</button>
+</form>
