@@ -1,10 +1,16 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.views.generic import View,ListView,CreateView,UpdateView,DeleteView,DetailView
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.models import User, Group
+
 
 from .models import Student,Course
-from .forms import StudentForm,StudentCourseForm
+from .forms import StudentForm,StudentCourseForm,SignUpForm
 from django.db.models import Q
+
+
 # Create your views here.
 # def student_list(request):
 #     student=Student.objects.all()
@@ -31,7 +37,7 @@ from django.db.models import Q
 #         return redirect('student_list')
 #     return render(request,"student/student_confirm_delete.html",{"student":student})
 
-class StudentsListView(ListView):
+class StudentsListView(LoginRequiredMixin,ListView):
     model=Student
     context_object_name='students'
     template_name = 'students/student_list.html'
@@ -49,10 +55,11 @@ class StudentsListView(ListView):
             ).distinct()
 
         return queryset
+  
 
-
-class StudentCreateView(CreateView):
+class StudentCreateView(PermissionRequiredMixin,CreateView):
     model=Student
+    permission_required="students.add_student"
     fields=["name","age","grade","email","department"]
     
     template_name = "students/student_form.html"
@@ -91,3 +98,26 @@ class StudentAddCourse(UpdateView):
         context = super().get_context_data(**kwargs)
         context["student"] = self.object
         return context
+    
+
+
+
+def signup(request):
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = User.objects.create_user(
+                username=form.cleaned_data['username'],
+                email=form.cleaned_data['email'],
+                password=form.cleaned_data['password1']
+            )
+
+            # add user to Student group
+            student_group = Group.objects.get(name='Student')
+            user.groups.add(student_group)
+
+            return redirect('login')
+    else:
+        form = SignUpForm()
+
+    return render(request, 'registration/signup.html', {'form': form})

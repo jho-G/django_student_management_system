@@ -143,6 +143,9 @@
                 <a href="{% url 'student_delete' student.id %}">Delete</a>
                 <a href="{% url 'student_add_course' student.id %}">Add Course</a>
                 <a href="{% url 'student_detail' student.id %}">View</a>
+                {% if perms.students.add_student %}
+                    <a href="{% url 'student_create' %}">Add Student</a>
+                {% endif %}
             </div>
         </div>
     {% endfor %}
