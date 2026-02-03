@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Add Grade</h2>
+
+
+{{ form.errors }}
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Save Grade</button>
+</form>
+
+<p id="percentageDisplay"></p>
+
+<script>
+const examSelect = document.getElementById("id_exam");
+const scoreInput = document.getElementById("id_score");
+const percentDisplay = document.getElementById("percentageDisplay");
+
+function updateLimitsAndPercentage() {
+    const examName = examSelect.options[examSelect.selectedIndex].text.toLowerCase();
+    let maxScore = 100;
+
+    if (examName.includes("quiz")) maxScore = 10;
+    else if (examName.includes("test")) maxScore = 15;
+    else if (examName.includes("mid")) maxScore = 25;
+    else if (examName.includes("final")) maxScore = 50;
+
+    scoreInput.max = maxScore;
+    scoreInput.placeholder = "Max: " + maxScore;
+
+    const score = parseFloat(scoreInput.value);
+    if (!isNaN(score)) {
+        const percent = (score / maxScore) * 100;
+        percentDisplay.innerHTML = "Percentage: " + percent.toFixed(2) + "%";
+    } else {
+        percentDisplay.innerHTML = "";
+    }
+}
+
+examSelect.addEventListener("change", updateLimitsAndPercentage);
+scoreInput.addEventListener("input", updateLimitsAndPercentage);
+</script>
+
+
+{% endblock %}

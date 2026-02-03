@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Teacher Dashboard</h1>
+<p>Welcome, {{ request.user.username }}</p>
+<h2>All Students</h2>
+<ul>
+  {% for student in students %}
+    <li>{{ student.name }} - {{ student.department }}</li>
+  {% endfor %}
+</ul>
+
+<a href="{% url 'add_grade' %}">add grade</a>
+<br>
+
+<a href="{% url 'mark_attendance' %}">mark attendance</a> 
+<br>
+<b><a href="{% url 'attendance_list' %}">view attendance records</a></b>
+{% endblock %}

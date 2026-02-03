@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% for course, data in courses_data.items %}
+
+<h3>{{ course }}</h3>
+
+<table border="1">
+<tr>
+    <th>Quiz</th>
+    <th>Test</th>
+    <th>Midterm</th>
+    <th>Final</th>
+    <th>Total</th>
+</tr>
+
+<tr>
+    <td>{{ data.quiz }}</td>
+    <td>{{ data.test }}</td>
+    <td>{{ data.midterm }}</td>
+    <td>{{ data.final }}</td>
+    <td>{{ data.sum }}</td>
+</tr>
+</table>
+
+<br>
+
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mark Attendance</title>
+
+    <style>
+        body{
+            background:#f4f6f9;
+            font-family: Arial, sans-serif;
+        }
+
+        .container{
+            width:400px;
+            margin:80px auto;
+            background:white;
+            padding:30px;
+            border-radius:10px;
+            box-shadow:0 0 15px rgba(0,0,0,0.1);
+        }
+
+        h2{
+            text-align:center;
+            margin-bottom:25px;
+            color:#333;
+        }
+
+        form p{
+            margin-bottom:15px;
+        }
+
+        label{
+            display:block;
+            margin-bottom:5px;
+            font-weight:bold;
+            color:#444;
+        }
+
+        input, select{
+            width:100%;
+            padding:10px;
+            border-radius:5px;
+            border:1px solid #ccc;
+            font-size:14px;
+        }
+
+        input:focus, select:focus{
+            outline:none;
+            border-color:#4CAF50;
+        }
+
+        button{
+            width:100%;
+            padding:12px;
+            background:#4CAF50;
+            border:none;
+            color:white;
+            font-size:16px;
+            border-radius:5px;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        button:hover{
+            background:#43a047;
+        }
+
+        .back-link{
+            text-align:center;
+            margin-top:15px;
+        }
+
+        .back-link a{
+            text-decoration:none;
+            color:#4CAF50;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Mark Attendance</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">Mark Attendance</button>
+    </form>
+
+    <div class="back-link">
+        <a href="/">← Back to Home</a>
+    </div>
+</div>
+
+</body>
+</html>

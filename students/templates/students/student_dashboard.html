@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Student Dashboard</h1>
+<p>Welcome, {{ request.user.username }}</p>
+<h2>Your Courses</h2>
+<ul>
+  {% for course in courses %}
+    <li>{{ course.name }}</li>
+  {% endfor %}
+</ul>
+
+<br>
+<a href="{% url 'my_grades' %}"> view my grades</a>
+<br>
+<a href="{% url 'my_attendance' %}"> view my attendance</a>
+{% endblock %}

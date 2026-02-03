@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Student Grade Report</h2>
+
+<table border="1">
+<tr>
+    <th>Student</th>
+    <th>Quiz</th>
+    <th>Test</th>
+    <th>Mid</th>
+    <th>Final</th>
+    <th>ድምር</th>
+    <th>Percentage</th>
+</tr>
+
+{% for s in students_data %}
+<tr>
+    <td>{{ s.student.name }}</td>
+    <td>{{ s.quiz|default:"-" }}</td>
+    <td>{{ s.test|default:"-" }}</td>
+    <td>{{ s.mid|default:"-" }}</td>
+    <td>{{ s.final|default:"-" }}</td>
+    <td>{{ s.sum }}</td>
+    <td>{{ s.percentage }}%</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}

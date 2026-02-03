@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>All Attendance Records</h2>
+<table border="1" cellpadding="8">
+    <tr>
+        <th>Student</th>
+        <th>Course</th>
+        <th>Date</th>
+        <th>Status</th>
+    </tr>
+    {% for a in attendance %}
+    <tr>
+        <td>{{ a.student.name }}</td>
+        <td>{{ a.course.course_name }}</td>
+        <td>{{ a.date }}</td>
+        <td>{{ a.status|capfirst }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="4">No attendance records found.</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

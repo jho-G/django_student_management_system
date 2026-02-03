@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    "whitenoise.runserver_nostatic",
+
     #local apps
     'students'
 ]
@@ -50,6 +52,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'school.urls'
@@ -57,7 +61,7 @@ ROOT_URLCONF = 'school.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR/'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -126,5 +130,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 LOGIN_URL='login'
-LOGIN_REDIRECT_URL='student_list'
-LOGIN_REDIRECT_URL='login'
+#LOGIN_REDIRECT_URL='student_list'
+#LOGIN_REDIRECT_URL='login'
+#LOGIN_REDIRECT_URL = '/redirect-dashboard/'
+LOGIN_REDIRECT_URL = 'role_redirect'
+LOGOUT_REDIRECT_URL='login'
+
+
+AUTH_USER_MODEL='students.CustomerUser'
+
+
