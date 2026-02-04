@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-%wa*4-j9w6zjy#yl%usr8tl^&#8^ws6ytrz2pz$*iyamxj$y%v
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["django-student-management-system-1-lv73.onrender.com"]
+
 
 
 # Application definition
@@ -144,3 +145,6 @@ AUTH_USER_MODEL='students.CustomerUser'
 
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+import os
+
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(",")
