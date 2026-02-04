@@ -6,13 +6,13 @@ cffi==2.0.0
 Django==5.2.4
 django-crispy-forms==2.5
 django-debug-toolbar==6.1.0
-dj-database-url==2.3.0
+#dj-database-url==2.3.0
 Faker==37.11.0
 gunicorn==23.0.0
 packaging==25.0
 pillow==11.3.0
 pycparser==2.23
-python-dotenv==1.0.1
+#python-dotenv==1.0.1
 sqlparse==0.5.3
 tzdata==2025.2
 whitenoise==6.11.0

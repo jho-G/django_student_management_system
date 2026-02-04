@@ -12,11 +12,11 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
-import dj_database_url
-from dotenv import load_dotenv
+#import dj_database_url
+#from dotenv import load_dotenv
 
 # Load environment variables
-load_dotenv()
+#load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -100,23 +100,15 @@ WSGI_APPLICATION = 'school.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 # Database configuration for Render (PostgreSQL) and local development (SQLite)
-if os.environ.get('DATABASE_URL'):
-    # Use PostgreSQL on Render
-    DATABASES = {
-        'default': dj_database_url.config(
-            default=os.environ.get('DATABASE_URL'),
-            conn_max_age=600,
-            conn_health_checks=True,
-        )
+# Always use SQLite on Render too
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
-else:
-    # Fallback to SQLite for local development
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+}
+
+# Remove the if/else PostgreSQL logic completely
 
 
 # Password validation
