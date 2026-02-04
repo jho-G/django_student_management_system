@@ -10,7 +10,7 @@ services:
       - key: DEBUG
         value: false
       - key: PYTHON_VERSION
-        value: 3.11.9
+        value: 3.13.5
       - key: WEB_CONCURRENCY
         value: 2
     healthCheckPath: 
